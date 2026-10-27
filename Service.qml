@@ -18,13 +18,19 @@ Item {
     if (u.indexOf("file://") === 0) u = u.slice(7)
     return decodeURIComponent(u)
   }
+  // Medföljande standardljud (notify.ogg i pluginmappen), samma sätt som fetch.sh.
+  readonly property string bundledSound: {
+    var u = String(Qt.resolvedUrl(Model.BUNDLED_SOUND_NAME) || "")
+    if (u.indexOf("file://") === 0) u = u.slice(7)
+    return decodeURIComponent(u)
+  }
 
   // Inställningar (sätts av BarWidget.configure)
   property bool configured: false
   property var channels: []
   property real pollMinutes: 2
   property bool soundEnabled: true
-  property string soundFile: Model.DEFAULT_SOUND
+  property string soundFile: Model.resolveSoundFile("", bundledSound)
   property bool notifyOnStartup: false
 
   // Tillstånd
@@ -51,7 +57,7 @@ Item {
     var key = nextChannels.join(",")
     pollMinutes = Model.toPollMinutes(pick("pollMinutes", 2))
     soundEnabled = Model.toBool(pick("soundEnabled", true), true)
-    soundFile = String(pick("soundFile", Model.DEFAULT_SOUND))
+    soundFile = Model.resolveSoundFile(pick("soundFile", ""), bundledSound)
     notifyOnStartup = Model.toBool(pick("notifyOnStartup", false), false)
     var first = !configured
     configured = true
@@ -126,7 +132,7 @@ Item {
 
   function announce(state) {
     Quickshell.execDetached(Model.notifyCommand(state))
-    if (soundEnabled) Quickshell.execDetached(Model.soundCommand(soundFile))
+    if (soundEnabled) Quickshell.execDetached(Model.soundCommand(soundFile, bundledSound))
   }
 
   function openChannel(channel) {

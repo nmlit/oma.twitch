@@ -58,6 +58,10 @@ omarchy bar set oma.twitch notifyOnStartup false     # notis vid start för kana
 - `notifyOnStartup` är av som standard: kanaler som redan sänder när datorn/skalet startar markeras bara som live, utan pling. Samma sak när du lägger till en kanal som redan är live.
 - Går en ström ner och upp igen inom 10 minuter (avbrott/omstart av strömmen) kommer ingen ny notis.
 - Ljudet spelas med `pw-play` (eller `paplay`). Saknas filen används `bell.oga` från `sound-theme-freedesktop`.
+- **Medföljande ljud (1.0.1):** standardplinget är nu `notify.ogg` som ligger i pluginmappen och följer med vid installation och `omarchy plugin update oma.twitch --yes`. Lämnar du `soundFile` tomt (standard) används den. Sökvägen löses upp vid körning med `Qt.resolvedUrl("notify.ogg")`, så det fungerar oavsett var pluginet ligger.
+- Egen ljudfil: `omarchy bar set oma.twitch soundFile "/sökväg/till/ljud.ogg"` går före det medföljande ljudet. Tillbaka till standard: `omarchy bar set oma.twitch soundFile ""`.
+- Ordning om en fil saknas: vald fil → `notify.ogg` → `message-new-instant.oga` → `bell.oga`.
+- Obs: värdet `/usr/share/sounds/freedesktop/stereo/message-new-instant.oga` (standard i 1.0.0, exemplet ovan) räknas som ”inte valt” och ger `notify.ogg`, så äldre installationer får det nya ljudet automatiskt. Vill du ha ett freedesktop-ljud, välj t.ex. `/usr/share/sounds/freedesktop/stereo/message.oga`.
 - Inställningarna sparas i `~/.config/omarchy/shell.json`.
 
 ## Datakälla (ingen inloggning)
@@ -95,6 +99,7 @@ BarWidget.qml   ikonen i baren
 Panel.qml       kanallista, lägg till/ta bort, uppdatera
 Model.js        parsning och logik (offline -> live, texter)
 fetch.sh        curl mot DecAPI (+ GQL-reserv)
+notify.ogg      medföljande standardljud (pling)
 README.md
 LICENSE
 ```

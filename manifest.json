@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "oma.twitch",
   "name": "Twitch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "nmlit",
   "license": "MIT",
   "description": "Plingar och visar en notis när dina Twitch-kanaler går live. Ingen inloggning behövs.",
@@ -22,7 +22,7 @@
       "channels": "",
       "pollMinutes": 2,
       "soundEnabled": true,
-      "soundFile": "/usr/share/sounds/freedesktop/stereo/message-new-instant.oga",
+      "soundFile": "",
       "notifyOnStartup": false
     },
     "schema": [
@@ -52,8 +52,8 @@
         "key": "soundFile",
         "type": "string",
         "label": "Ljudfil",
-        "defaultValue": "/usr/share/sounds/freedesktop/stereo/message-new-instant.oga",
-        "description": "Sökväg till oga/ogg/wav. Spelas med pw-play (eller paplay)."
+        "defaultValue": "",
+        "description": "Sökväg till oga/ogg/wav. Tomt = medföljande notify.ogg. Spelas med pw-play (eller paplay)."
       },
       {
         "key": "notifyOnStartup",

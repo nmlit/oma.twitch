@@ -4,7 +4,13 @@
 
 var RETRY_DELAYS_MS = [5000, 10000, 20000, 30000, 60000, 120000]
 var RENOTIFY_COOLDOWN_MS = 10 * 60 * 1000
+// Standardljudet är den medföljande notify.ogg i pluginmappen (sökvägen löses upp
+// vid körning i Service.qml med Qt.resolvedUrl). DEFAULT_SOUND är reserv om den saknas.
+var BUNDLED_SOUND_NAME = "notify.ogg"
 var DEFAULT_SOUND = "/usr/share/sounds/freedesktop/stereo/message-new-instant.oga"
+// 1.0.0 hade freedesktop-sökvägen som manifest-default; ett sådant värde i
+// shell.json räknas som "inte valt själv" och ger det medföljande ljudet.
+var LEGACY_DEFAULT_SOUND = DEFAULT_SOUND
 var FALLBACK_SOUND = "/usr/share/sounds/freedesktop/stereo/bell.oga"
 var MAX_TEXT = 300
 
@@ -310,13 +316,22 @@ function channelUrl(channel) {
   return "https://www.twitch.tv/" + normalizeChannel(channel)
 }
 
-// Spelar ljudfilen med pw-play, annars paplay. Faller tillbaka till bell.oga.
-function soundCommand(file) {
-  var f = String(file || "") || DEFAULT_SOUND
+// Tom inställning (eller 1.0.0:s gamla default) = medföljande notify.ogg.
+function resolveSoundFile(setting, bundled) {
+  var s = String(setting === undefined || setting === null ? "" : setting).trim()
+  if (s.indexOf("file://") === 0) s = decodeURIComponent(s.slice(7))
+  if (s === "" || s === LEGACY_DEFAULT_SOUND) return String(bundled || "") || DEFAULT_SOUND
+  return s
+}
+
+// Spelar ljudfilen med pw-play, annars paplay. Ordning: vald fil -> medföljande
+// notify.ogg -> message-new-instant.oga -> bell.oga (första som går att läsa).
+function soundCommand(file, bundled) {
+  var f = String(file || "") || String(bundled || "") || DEFAULT_SOUND
   return ["sh", "-c",
-    "f=\"$1\"; [ -r \"$f\" ] || f=\"$2\"; [ -r \"$f\" ] || f=\"$3\"; " +
+    "f=\"$1\"; [ -r \"$f\" ] || f=\"$2\"; [ -r \"$f\" ] || f=\"$3\"; [ -r \"$f\" ] || f=\"$4\"; " +
     "if command -v pw-play >/dev/null 2>&1; then exec pw-play \"$f\"; else exec paplay \"$f\"; fi",
-    "oma.twitch-sound", f, DEFAULT_SOUND, FALLBACK_SOUND]
+    "oma.twitch-sound", f, String(bundled || "") || DEFAULT_SOUND, DEFAULT_SOUND, FALLBACK_SOUND]
 }
 
 // notify-send väntar (--wait) på klick; klick på notisen eller "Öppna på Twitch"
