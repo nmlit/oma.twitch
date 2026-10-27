@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "oma.twitch",
   "name": "Twitch",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "nmlit",
   "license": "MIT",
   "description": "Plingar och visar en notis när dina Twitch-kanaler går live. Ingen inloggning behövs.",

@@ -8,6 +8,8 @@ BarWidget {
 
   readonly property string pluginId: "oma.twitch"
   readonly property color twitchPurple: "#9146FF"
+  // Live-färg: temats röda (color1/red i colors.toml) via Commons.Color.urgent.
+  readonly property color liveColor: Commons.Color.urgent
   moduleName: pluginId
 
   readonly property var watcher: bar && bar.shell ? bar.shell.serviceFor(pluginId) : null
@@ -79,7 +81,7 @@ BarWidget {
     text: root.glyph
     slotSize: Style.bar.statusSlot
     active: root.anyLive
-    activeColor: root.twitchPurple
+    activeColor: root.liveColor
     dimmed: !root.anyLive
     tooltipText: root.tooltip
     onPressed: function(b) { root.handlePress(b) }
@@ -92,7 +94,7 @@ BarWidget {
     bar: root.bar
     text: root.glyph + " " + root.liveCount
     active: true
-    activeColor: root.twitchPurple
+    activeColor: root.liveColor
     tooltipText: root.tooltip
     onPressed: function(b) { root.handlePress(b) }
   }

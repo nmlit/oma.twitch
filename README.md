@@ -3,6 +3,8 @@
 Plingar och visar en notis när dina Twitch-kanaler går live – **utan inloggning**.
 Ikonen i Omarchy-baren lyser lila med antal när någon av kanalerna sänder, och panelen visar alla kanaler med status.
 
+> Från version 1.0.2 lyser ikonen i stället **röd** när någon är live (temats röda färg), se [Färger](#färger).
+
 Plugin-id: `oma.twitch`
 
 ## Installation
@@ -40,7 +42,7 @@ omarchy-restart-shell
 | Mittenklick | Uppdatera nu |
 | Högerklick | Öppna kanalen om exakt en är live, annars panelen |
 
-- **Baren:** Twitch-ikonen är nedtonad när ingen sänder. När någon går live blir den lila med antal (t.ex. ikon + 2). Tooltip listar vilka som är live, spel och hur länge de sänt.
+- **Baren:** Twitch-ikonen är nedtonad när ingen sänder. När någon går live blir den lila med antal (t.ex. ikon + 2). *(Från 1.0.2: röd i stället för lila, se Färger nedan.)* Tooltip listar vilka som är live, spel och hur länge de sänt.
 - **Notis + pling:** när en kanal går från offline till live kommer notisen ”🔴 kanal är live!” med titel och spel. Klicka på notisen (eller ”Öppna på Twitch”) så öppnas `twitch.tv/kanal` i webbläsaren.
 - **Panelen:** alla kanaler med live/offline, hur länge de sänt, tittare, spel och titel. Klicka på en kanal för att öppna den, ✕ tar bort den. Skriv ett kanalnamn eller klistra in en twitch.tv-länk i fältet och tryck Enter för att lägga till. ”Uppdatera” hämtar direkt och ”Testa notis” visar en testnotis med ljud.
 - Tangenter i panelen: `r` uppdatera · `a` lägg till kanal · `Esc` stäng.
@@ -63,6 +65,12 @@ omarchy bar set oma.twitch notifyOnStartup false     # notis vid start för kana
 - Ordning om en fil saknas: vald fil → `notify.ogg` → `message-new-instant.oga` → `bell.oga`.
 - Obs: värdet `/usr/share/sounds/freedesktop/stereo/message-new-instant.oga` (standard i 1.0.0, exemplet ovan) räknas som ”inte valt” och ger `notify.ogg`, så äldre installationer får det nya ljudet automatiskt. Vill du ha ett freedesktop-ljud, välj t.ex. `/usr/share/sounds/freedesktop/stereo/message.oga`.
 - Inställningarna sparas i `~/.config/omarchy/shell.json`.
+
+## Färger
+
+- **Live (från 1.0.2):** ikonen och antalet i baren, rubrikens ”N live” och live-pricken/texten i panelen använder temats röda färg (`Commons.Color.urgent`, som Omarchy hämtar från `red`/`color1` i temats `colors.toml`). Byter du tema följer färgen med.
+- **Offline:** oförändrat, nedtonad ikon.
+- Rubriken ”Twitch” i panelen är fortfarande Twitch-lila (#9146FF) som varumärkesfärg.
 
 ## Datakälla (ingen inloggning)
 
