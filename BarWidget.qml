@@ -8,8 +8,8 @@ BarWidget {
 
   readonly property string pluginId: "oma.twitch"
   readonly property color twitchPurple: "#9146FF"
-  // Live-färg: temats röda (color1/red i colors.toml) via Commons.Color.urgent.
-  readonly property color liveColor: Commons.Color.urgent
+  // Live-färg: fast röd (från 1.0.3). Commons.Color fanns inte i BarWidget-scope, ikonen blev osynlig.
+  readonly property color liveColor: "#e53935"
   moduleName: pluginId
 
   readonly property var watcher: bar && bar.shell ? bar.shell.serviceFor(pluginId) : null

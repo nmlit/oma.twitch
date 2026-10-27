@@ -4,6 +4,8 @@ Plingar och visar en notis när dina Twitch-kanaler går live – **utan inloggn
 Ikonen i Omarchy-baren lyser lila med antal när någon av kanalerna sänder, och panelen visar alla kanaler med status.
 
 > Från version 1.0.2 lyser ikonen i stället **röd** när någon är live (temats röda färg), se [Färger](#färger).
+>
+> Från version 1.0.3 används en fast röd färg (`#e53935`), eftersom temats färg saknades på vissa versioner och ikonen då blev osynlig.
 
 Plugin-id: `oma.twitch`
 
@@ -69,6 +71,7 @@ omarchy bar set oma.twitch notifyOnStartup false     # notis vid start för kana
 ## Färger
 
 - **Live (från 1.0.2):** ikonen och antalet i baren, rubrikens ”N live” och live-pricken/texten i panelen använder temats röda färg (`Commons.Color.urgent`, som Omarchy hämtar från `red`/`color1` i temats `colors.toml`). Byter du tema följer färgen med.
+- **Live (från 1.0.3):** färgen är nu en fast, tydlig röd (`#e53935`) i både baren och panelen. I 1.0.2 blev ikonen osynlig i stället för röd, eftersom temafärgen inte gick att nå från bar-widgeten på vissa versioner (`ReferenceError: Commons is not defined`). Den fasta färgen fungerar oavsett version och tema.
 - **Offline:** oförändrat, nedtonad ikon.
 - Rubriken ”Twitch” i panelen är fortfarande Twitch-lila (#9146FF) som varumärkesfärg.
 

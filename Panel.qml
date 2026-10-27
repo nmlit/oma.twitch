@@ -21,8 +21,8 @@ Panel {
 
   readonly property color fg: bar ? bar.foreground : Commons.Color.foreground
   readonly property color dim: Qt.rgba(fg.r, fg.g, fg.b, 0.62)
-  // Live-färg: temats röda (color1/red i colors.toml), samma som baren.
-  readonly property color liveColor: Commons.Color.urgent
+  // Live-färg: fast röd (från 1.0.3), oberoende av temafärger.
+  readonly property color liveColor: "#e53935"
   readonly property color twitchPurple: "#9146FF"
   readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
   property string inputError: ""
